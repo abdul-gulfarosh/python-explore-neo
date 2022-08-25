@@ -1,0 +1,71 @@
+"""Extract data on NEOs and close approaches from CSV and JSON files.
+
+The `load_neos` function extracts NEO data from a CSV file, formatted as
+described in the project instructions, into a collection of `NearEarthObject`s.
+
+The `load_approaches` function extracts close approach data from a JSON file,
+formatted as described in the project instructions, into a collection of
+`CloseApproach` objects.
+
+The main module calls these functions with the arguments provided at the
+command
+line, and uses the resulting collections to build an `NEODatabase`.
+
+You'll edit this file in Task 2.
+"""
+import csv
+import json
+from unicodedata import name
+
+from models import NearEarthObject, CloseApproach
+
+
+def load_neos(neo_csv_path):
+    """Read near-Earth object information from a CSV file.
+
+    :param neo_csv_path: A path to a CSV file containing data about near-Earth
+    objects.
+    :return: A collection of `NearEarthObject`s.
+    """
+    neos = []
+    with open(neo_csv_path) as f:
+        records = csv.reader(f)
+        headers = next(records)
+        designation_index = headers.index('pdes')
+        name_index = headers.index('name')
+        hazardous_index = headers.index('pha')
+        diameter_index = headers.index('diameter')
+
+        for rec in records:
+            neo = NearEarthObject(
+                designation=rec[designation_index],
+                name=rec[name_index],
+                hazardous=rec[hazardous_index] == "Y",
+                diameter=rec[diameter_index])
+            neos.append(neo)
+    return neos
+
+
+def load_approaches(cad_json_path):
+    """Read close approach data from a JSON file.
+
+    :param cad_json_path: A path to a JSON file containing data about close
+    approaches.
+    :return: A collection of `CloseApproach`es.
+    """
+    with open(cad_json_path) as f:
+        contents = json.load(f)
+        headers = contents['fields']
+        designation_index = headers.index('des')
+        time_index = headers.index('cd')
+        distance_index = headers.index('dist')
+        velocity_index = headers.index('v_rel')
+        cad = []
+        for rec in contents['data']:
+            approach = CloseApproach(
+                    designation=rec[designation_index],
+                    time=rec[time_index],
+                    distance=rec[distance_index],
+                    velocity=rec[velocity_index])
+            cad.append(approach)
+    return cad
