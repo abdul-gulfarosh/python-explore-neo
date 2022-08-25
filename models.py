@@ -65,7 +65,7 @@ class NearEarthObject:
             f"{self.diameter:.3f} km and {is_hazardous} potentially hazardous."
 
     def __repr__(self):
-        """Return `repr(self)`"""
+        """Return `repr(self)`."""
         return f"NearEarthObject(designation={self.designation!r}, " \
             f"name={self.name!r}, diameter={self.diameter:.3f},  " \
                f"hazardous={self.hazardous!r})"
@@ -121,7 +121,7 @@ class CloseApproach:
             f"and a velocity of {self.velocity:.2f} km/s."
 
     def __repr__(self):
-        """Return `repr(self)`"""
+        """Return `repr(self)`."""
         return f"CloseApproach(time={self.time_str!r}, " \
                f"distance={self.distance:.2f}, " \
             f"velocity={self.velocity:.2f}, neo={self.neo!r})"

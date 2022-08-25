@@ -71,7 +71,7 @@ class AttributeFilter:
         raise UnsupportedCriterionError
 
     def __repr__(self):
-        """Return `repr(self)`"""
+        """Return `repr(self)`."""
         return f"{self.__class__.__name__}" \
             f"(op=operator.{self.op.__name__}, value={self.value})"
 
